@@ -1,16 +1,16 @@
-import { ReactNode } from 'react'
+import { ComponentProps, ReactNode } from 'react'
 import { ExternalLinkContainer } from './styles'
 
 import { FaExternalLinkAlt } from 'react-icons/fa'
 
-export interface ExternalLinkProps {
+interface ExternalLinkProps extends ComponentProps<'a'> {
   text?: string
   icon?: ReactNode
 }
 
-export function ExternalLink({ text, icon }: ExternalLinkProps) {
+export function ExternalLink({ text, icon, ...rest }: ExternalLinkProps) {
   return (
-    <ExternalLinkContainer>
+    <ExternalLinkContainer {...rest}>
       {text}
       {icon ?? <FaExternalLinkAlt />}
     </ExternalLinkContainer>
