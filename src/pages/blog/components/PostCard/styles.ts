@@ -38,13 +38,13 @@ export const PostCardContainer = styled(Link)`
       font-size: 1rem;
       color: ${(props) => props.theme['base-span']};
     }
+  }
 
-    p {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 4;
-    }
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
   }
 `
