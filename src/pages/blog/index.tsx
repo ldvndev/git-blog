@@ -7,13 +7,9 @@ import { BlogPageContainer } from './styles'
 import { useQuery } from '@tanstack/react-query'
 
 export function BlogPage() {
-  const query = {
-    query: '',
-  }
-
   const { data: issues } = useQuery({
     queryKey: ['issues'],
-    queryFn: () => getSearchIssues(query),
+    queryFn: () => getSearchIssues({ query: '' }),
   })
 
   return (

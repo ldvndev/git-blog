@@ -8,6 +8,7 @@ interface GetProfileResponse {
   followers: number
   following: number
   created_at: string
+  total_count: number
 }
 
 export async function getProfile() {

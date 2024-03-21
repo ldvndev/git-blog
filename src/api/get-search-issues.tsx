@@ -4,7 +4,7 @@ interface GetSearchIssuesProps {
   query: string
 }
 
-interface GetSearchIssuesResponse {
+export interface GetSearchIssuesResponse {
   items: {
     created_at: string
     body: string
