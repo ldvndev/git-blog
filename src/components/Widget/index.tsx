@@ -2,17 +2,24 @@ import { FaGithub, FaUsers } from 'react-icons/fa'
 import { WidgetContainer } from './styles'
 import { FaBuilding } from 'react-icons/fa6'
 
-export function Widget() {
+interface WidgetProps {
+  followers?: number
+}
+
+export function Widget({ followers }: WidgetProps) {
   return (
     <WidgetContainer>
       <li>
-        <FaGithub /> ldvndev
+        <FaGithub />
+        ldvndev
       </li>
       <li>
-        <FaBuilding /> Rocketseat
+        <FaBuilding />
+        Rocketseat
       </li>
       <li>
-        <FaUsers /> 65 seguidores
+        <FaUsers />
+        {followers} seguidores
       </li>
     </WidgetContainer>
   )
