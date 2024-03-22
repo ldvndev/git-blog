@@ -1,26 +1,56 @@
-import { getSearchIssues } from '../../api/get-search-issues'
+import { useEffect, useState } from 'react'
+import { api } from '../../lib/axios'
 import { PostCard } from './components/PostCard'
 import { Profile } from './components/Profile'
 import { SearchForm } from './components/SearchForm'
 import { BlogPageContainer } from './styles'
 
-import { useQuery } from '@tanstack/react-query'
+const username = import.meta.env.VITE_GITHUB_USERNAME
+const repository = import.meta.env.VITE_GITHUB_REPOSITORY
+
+export interface PostsResponse {
+  title: string
+  body: string
+  created_at: string
+  number: number
+  html_url: string
+  comments: number
+  user: {
+    login: string
+  }
+}
 
 export function BlogPage() {
-  const { data: issues } = useQuery({
-    queryKey: ['issues'],
-    queryFn: () => getSearchIssues({ query: '' }),
-  })
+  const [posts, setPosts] = useState<PostsResponse[]>([])
+  const [loading, setLoading] = useState(true)
+
+  async function loadPosts(query: string = '') {
+    try {
+      const response = await api.get('/search/issues', {
+        params: {
+          q: `${query}%20repo:${username}/${repository}`,
+        },
+      })
+
+      setPosts(response.data.items)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadPosts()
+  }, [])
 
   return (
     <>
       <Profile />
-      <SearchForm />
+      <SearchForm loadPost={loadPosts} length={posts.length} />
 
       <BlogPageContainer>
-        {issues &&
-          issues.map((issue, index) => {
-            return <PostCard key={index} issue={issue} />
+        {posts &&
+          posts.map((post) => {
+            return <PostCard key={post.number} post={post} />
           })}
       </BlogPageContainer>
     </>

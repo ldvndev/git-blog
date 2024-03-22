@@ -1,29 +1,26 @@
+import { PostsResponse } from '../..'
 import { PostCardContainer } from './styles'
 
 import { formatDistanceToNow } from 'date-fns'
+
 import { ptBR } from 'date-fns/locale'
 
 interface PostCardProps {
-  issue: {
-    created_at: string
-    body: string
-    title: string
-    number: number
-  }
+  post: PostsResponse
 }
 
-export function PostCard({ issue }: PostCardProps) {
+export function PostCard({ post }: PostCardProps) {
   return (
     <PostCardContainer to="/post/1">
       <div>
-        <strong>{issue.title}</strong>
+        <strong>{post.title}</strong>
         <span>
-          {formatDistanceToNow(issue.created_at, {
+          {formatDistanceToNow(post.created_at, {
             locale: ptBR,
           })}
         </span>
       </div>
-      <p>{issue.body}</p>
+      <p>{post.body}</p>
     </PostCardContainer>
   )
 }

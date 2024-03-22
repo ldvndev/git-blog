@@ -2,11 +2,7 @@ import { FaGithub, FaUsers } from 'react-icons/fa'
 import { WidgetContainer } from './styles'
 import { FaBuilding } from 'react-icons/fa6'
 
-interface WidgetProps {
-  followers?: number
-}
-
-export function Widget({ followers }: WidgetProps) {
+export function Widget() {
   return (
     <WidgetContainer>
       <li>
@@ -19,7 +15,7 @@ export function Widget({ followers }: WidgetProps) {
       </li>
       <li>
         <FaUsers />
-        {followers} seguidores
+        60 seguidores
       </li>
     </WidgetContainer>
   )

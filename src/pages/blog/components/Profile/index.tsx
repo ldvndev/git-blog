@@ -1,30 +1,22 @@
-import { getProfile } from '../../../../api/get-profile'
 import { ExternalLink } from '../../../../components/ExternalLink'
 import { Widget } from '../../../../components/Widget'
 import { ProfileContainer, ProfileContent, ProfilePicture } from './styles'
 
-import { useQuery } from '@tanstack/react-query'
-
 export function Profile() {
-  const { data: user } = useQuery({
-    queryKey: ['user'],
-    queryFn: getProfile,
-  })
-
   return (
     <ProfileContainer>
       <ProfilePicture src="https://cdn-images-1.medium.com/v2/resize:fit:1200/1*TkXVfLTwsHdwpUEjGzdi9w.jpeg" />
 
       <ProfileContent>
         <header>
-          <h1>{user?.name}</h1>
+          <h1>Leonardo Rodrigues</h1>
 
-          <ExternalLink text="Github" href={user?.html_url} />
+          <ExternalLink text="Github" href="#" />
         </header>
 
-        <p>{user?.bio}</p>
+        <p>Lorem ipsum dolor sit.</p>
 
-        <Widget followers={user?.followers} />
+        <Widget />
       </ProfileContent>
     </ProfileContainer>
   )
