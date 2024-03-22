@@ -1,22 +1,62 @@
+import { useEffect, useState } from 'react'
 import { ExternalLink } from '../../../../components/ExternalLink'
 import { Widget } from '../../../../components/Widget'
+import { api } from '../../../../lib/axios'
 import { ProfileContainer, ProfileContent, ProfilePicture } from './styles'
+import { Spinner } from '../../../../components/Spinner'
+
+const username = import.meta.env.VITE_GITHUB_USERNAME
+
+interface ProfileResponse {
+  login: string
+  bio: string
+  avatar_url?: string
+  html_url: string
+  name: string
+  company?: string
+  followers: number
+}
 
 export function Profile() {
+  const [userData, setUserData] = useState<ProfileResponse>(
+    {} as ProfileResponse,
+  )
+  const [isLoading, setIsLoading] = useState(true)
+
+  async function loadDataUser() {
+    try {
+      const response = await api.get(`/users/${username}`)
+
+      setUserData(response.data)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadDataUser()
+  }, [])
+
   return (
     <ProfileContainer>
-      <ProfilePicture src="https://cdn-images-1.medium.com/v2/resize:fit:1200/1*TkXVfLTwsHdwpUEjGzdi9w.jpeg" />
+      <ProfilePicture src={userData.avatar_url} />
 
       <ProfileContent>
-        <header>
-          <h1>Leonardo Rodrigues</h1>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            <header>
+              <h1>{userData.name}</h1>
 
-          <ExternalLink text="Github" href="#" />
-        </header>
+              <ExternalLink text="Github" href={userData.html_url} />
+            </header>
 
-        <p>Lorem ipsum dolor sit.</p>
+            <p>{userData.bio}</p>
 
-        <Widget />
+            <Widget followers={userData.followers} login={userData.login} />
+          </>
+        )}
       </ProfileContent>
     </ProfileContainer>
   )

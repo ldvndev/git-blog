@@ -4,6 +4,7 @@ import { PostCard } from './components/PostCard'
 import { Profile } from './components/Profile'
 import { SearchForm } from './components/SearchForm'
 import { BlogPageContainer } from './styles'
+import { Spinner } from '../../components/Spinner'
 
 const username = import.meta.env.VITE_GITHUB_USERNAME
 const repository = import.meta.env.VITE_GITHUB_REPOSITORY
@@ -22,7 +23,7 @@ export interface PostsResponse {
 
 export function BlogPage() {
   const [posts, setPosts] = useState<PostsResponse[]>([])
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   async function loadPosts(query: string = '') {
     try {
@@ -34,7 +35,7 @@ export function BlogPage() {
 
       setPosts(response.data.items)
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -48,10 +49,13 @@ export function BlogPage() {
       <SearchForm loadPost={loadPosts} length={posts.length} />
 
       <BlogPageContainer>
-        {posts &&
+        {isLoading ? (
+          <Spinner />
+        ) : (
           posts.map((post) => {
             return <PostCard key={post.number} post={post} />
-          })}
+          })
+        )}
       </BlogPageContainer>
     </>
   )
