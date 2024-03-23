@@ -27,12 +27,9 @@ export function BlogPage() {
 
   async function loadPosts(query: string = '') {
     try {
-      const response = await api.get('/search/issues', {
-        params: {
-          q: `${query}%20repo:${username}/${repository}`,
-        },
-      })
-
+      const response = await api.get(
+        `/search/issues?q=${query}%20repo:${username}/${repository}`,
+      )
       setPosts(response.data.items)
     } finally {
       setIsLoading(false)
@@ -52,8 +49,8 @@ export function BlogPage() {
         {isLoading ? (
           <Spinner />
         ) : (
-          posts.map((post, index) => {
-            return <PostCard key={index} post={post} />
+          posts.map((post) => {
+            return <PostCard key={post.number} post={post} />
           })
         )}
       </BlogPageContainer>

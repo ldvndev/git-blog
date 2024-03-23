@@ -19,8 +19,8 @@ export function SearchForm({ loadPost, length }: SearchFormProps) {
     resolver: zodResolver(searchFormInputSchema),
   })
 
-  function handleSearchPost(data: SearchFormInput) {
-    loadPost(data.query)
+  async function handleSearchPost(data: SearchFormInput) {
+    await loadPost(data.query)
     reset()
   }
 

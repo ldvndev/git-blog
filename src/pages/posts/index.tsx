@@ -3,16 +3,17 @@ import { api } from '../../lib/axios'
 import { PostHeader } from './components/PostHeader'
 import { PostsResponse } from '../blog'
 import { useEffect, useState } from 'react'
-import { Spinner } from '../../components/Spinner'
+import { PostContent } from './components/PostContent'
 
 const username = import.meta.env.VITE_GITHUB_USERNAME
 const repository = import.meta.env.VITE_GITHUB_REPOSITORY
 
 export function Post() {
-  const [details, setDetails] = useState({} as PostsResponse)
+  const [details, setDetails] = useState<PostsResponse>({} as PostsResponse)
   const [isLoading, setIsLoading] = useState(true)
-
   const { id } = useParams()
+
+  console.log(id)
 
   async function loadDetails() {
     try {
@@ -30,5 +31,10 @@ export function Post() {
     loadDetails()
   }, [])
 
-  return <>{isLoading ? <Spinner /> : <PostHeader details={details} />}</>
+  return (
+    <>
+      <PostHeader details={details} />
+      {!isLoading && <PostContent content={details.body} />}
+    </>
+  )
 }

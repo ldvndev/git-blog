@@ -6,8 +6,6 @@ import { FaGithub } from 'react-icons/fa'
 import { SlCalender } from 'react-icons/sl'
 import { TiMessage } from 'react-icons/ti'
 import { PostsResponse } from '../../../blog'
-import { formatDistanceToNow } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 
 interface PostHeaderProps {
   details: PostsResponse
@@ -36,17 +34,14 @@ export function PostHeader({ details }: PostHeaderProps) {
         />
       </header>
 
-      <h1>{details.title}</h1>
+      <h1>{details?.title}</h1>
       <ul>
         <li>
           <FaGithub /> {details.user?.login}
         </li>
         <li>
           <SlCalender />
-          {formatDistanceToNow(+new Date(details?.created_at), {
-            addSuffix: true,
-            locale: ptBR,
-          })}
+          {details.created_at}
         </li>
         <li>
           <TiMessage /> {details.comments} comentários
