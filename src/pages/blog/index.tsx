@@ -52,8 +52,8 @@ export function BlogPage() {
         {isLoading ? (
           <Spinner />
         ) : (
-          posts.map((post) => {
-            return <PostCard key={post.number} post={post} />
+          posts.map((post, index) => {
+            return <PostCard key={index} post={post} />
           })
         )}
       </BlogPageContainer>

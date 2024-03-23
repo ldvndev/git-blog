@@ -5,8 +5,15 @@ import { IoChevronBackSharp } from 'react-icons/io5'
 import { FaGithub } from 'react-icons/fa'
 import { SlCalender } from 'react-icons/sl'
 import { TiMessage } from 'react-icons/ti'
+import { PostsResponse } from '../../../blog'
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
-export function PostHeader() {
+interface PostHeaderProps {
+  details: PostsResponse
+}
+
+export function PostHeader({ details }: PostHeaderProps) {
   const navigate = useNavigate()
 
   function handleReturnToPreviousPage() {
@@ -22,19 +29,27 @@ export function PostHeader() {
           href="#"
           icon={<IoChevronBackSharp />}
         />
-        <ExternalLink text="Ver no github" href="#" target="_blank" />
+        <ExternalLink
+          text="Ver no github"
+          href={details.html_url}
+          target="_blank"
+        />
       </header>
 
-      <h1>JavaScript data types and data structures</h1>
+      <h1>{details.title}</h1>
       <ul>
         <li>
-          <FaGithub /> ldvndev
+          <FaGithub /> {details.user?.login}
         </li>
         <li>
-          <SlCalender /> Há 1 dia
+          <SlCalender />
+          {formatDistanceToNow(+new Date(details?.created_at), {
+            addSuffix: true,
+            locale: ptBR,
+          })}
         </li>
         <li>
-          <TiMessage /> 5 comentários
+          <TiMessage /> {details.comments} comentários
         </li>
       </ul>
     </PostHeaderContainer>
