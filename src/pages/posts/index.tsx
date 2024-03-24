@@ -13,14 +13,11 @@ export function Post() {
   const [isLoading, setIsLoading] = useState(true)
   const { id } = useParams()
 
-  console.log(id)
-
   async function loadDetails() {
     try {
       const response = await api.get(
-        `/repos/${username}/${repository}/issues/${id} `,
+        `/repos/${username}/${repository}/issues/${id}`,
       )
-
       setDetails(response.data)
     } finally {
       setIsLoading(false)
